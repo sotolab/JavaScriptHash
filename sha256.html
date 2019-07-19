@@ -1,4 +1,9 @@
-a
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
+
 <script type="text/javascript">
     /**
     *
@@ -9,7 +14,9 @@ a
     *
     **/
       
-    function SHA256(s){
+    function SHA256(){
+        // var s = document.getElementById("fname").value;
+        // console.log("Plain text: ", s);
       
         var chrsz   = 8;
         var hexcase = 0;
@@ -138,15 +145,36 @@ a
       
         s = Utf8Encode(s);
         return binb2hex(core_sha256(str2binb(s), s.length * chrsz));
+        
+        // var result = binb2hex(core_sha256(str2binb(s), s.length * chrsz));
+        
       
     }
-     
-     
-     
-     
- 
  
     // 암호화 확인
-    console.log(SHA256("Test")) ;
+    //console.log(SHA256("Test")) ;
  
 </script>
+
+
+
+<body>
+ <H1> HTML DES </H>
+  <div class="container">
+  <button id="button1" onclick="SHA256();">실행</button>
+  </div>
+    
+   <input type="text" id="fname">
+    
+ <h5>원본메시지  <div id="pmessage"></div> </h5>
+ <h5>암호메시지  <div id="emessage"></div> </h5>
+ 
+</body>
+<footer class="py-5 bg-dark">
+  <div class="container">
+    <p class="m-0 text-center text-white"><b>Copyright &copy; Sunstar 2019</b></p>
+  </div>
+</footer>
+</html>
+
+
