@@ -15,8 +15,8 @@
     **/
       
     function SHA256(){
-        // var s = document.getElementById("fname").value;
-        // console.log("Plain text: ", s);
+        var s = document.getElementById("fname").value;
+        console.log("Plain text: ", s);
       
         var chrsz   = 8;
         var hexcase = 0;
@@ -143,12 +143,12 @@
             return str;
         }
       
-        s = Utf8Encode(s);
-        return binb2hex(core_sha256(str2binb(s), s.length * chrsz));
+        //s = Utf8Encode(s);
+        //return binb2hex(core_sha256(str2binb(s), s.length * chrsz));
         
-        // var result = binb2hex(core_sha256(str2binb(s), s.length * chrsz));
-        //document.getElementById("pmessage").textContent = s;
-        //document.getElementById("emessage").textContent = result;
+        var result = binb2hex(core_sha256(str2binb(s), s.length * chrsz));
+        document.getElementById("pmessage").textContent = s;
+        document.getElementById("emessage").textContent = result;
         
       
     }
@@ -174,7 +174,7 @@
 </body>
 <footer class="py-5 bg-dark">
   <div class="container">
-    <p class="m-0 text-center text-white"><b>Copyright &copy; Sunstar 2019</b></p>
+    <p class="m-0 text-center text-white"><b>Copyright &copy; Sunstar. Since 2015</b></p>
   </div>
 </footer>
 </html>
