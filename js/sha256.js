@@ -1,16 +1,3 @@
-<!DOCTYPE html>
-<head>
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-<script type="text/javascript" src="./js/core.min.js"></script>
-<script type="text/javascript" src="./js/md5.js"></script>
-<script type="text/javascript" src="./js/sha1.js"></script>
-<script type="text/javascript" src="./js/ripemd160.js"></script>
-<script type="text/javascript" src="./js/sha256.min.js"></script>
-<script type="text/javascript" src="./js/sha512.min.js"></script>
-<script src="http://code.jquery.com/jquery-latest.js "></script>
-
 <script type="text/javascript">
     /**
     *
@@ -21,16 +8,14 @@
     *
     **/
       
-    function SHA256(){
-        let s = document.getElementById("fname").value;
-        console.log("Plain text: ", s);
+    function SHA256(s){
       
-        let chrsz   = 8;
-        let hexcase = 0;
+        var chrsz   = 8;
+        var hexcase = 0;
       
         function safe_add (x, y) {
-            let lsw = (x & 0xFFFF) + (y & 0xFFFF);
-            let msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+            var lsw = (x & 0xFFFF) + (y & 0xFFFF);
+            var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
             return (msw << 16) | (lsw & 0xFFFF);
         }
       
@@ -45,7 +30,7 @@
       
         function core_sha256 (m, l) {
              
-            let K = new Array(0x428A2F98, 0x71374491, 0xB5C0FBCF, 0xE9B5DBA5, 0x3956C25B, 0x59F111F1,
+            var K = new Array(0x428A2F98, 0x71374491, 0xB5C0FBCF, 0xE9B5DBA5, 0x3956C25B, 0x59F111F1,
                 0x923F82A4, 0xAB1C5ED5, 0xD807AA98, 0x12835B01, 0x243185BE, 0x550C7DC3,
                 0x72BE5D74, 0x80DEB1FE, 0x9BDC06A7, 0xC19BF174, 0xE49B69C1, 0xEFBE4786,
                 0xFC19DC6, 0x240CA1CC, 0x2DE92C6F, 0x4A7484AA, 0x5CB0A9DC, 0x76F988DA,
@@ -57,16 +42,16 @@
                 0x5B9CCA4F, 0x682E6FF3, 0x748F82EE, 0x78A5636F, 0x84C87814, 0x8CC70208,
                 0x90BEFFFA, 0xA4506CEB, 0xBEF9A3F7, 0xC67178F2);
  
-            let HASH = new Array(0x6A09E667, 0xBB67AE85, 0x3C6EF372, 0xA54FF53A, 0x510E527F, 0x9B05688C, 0x1F83D9AB, 0x5BE0CD19);
+            var HASH = new Array(0x6A09E667, 0xBB67AE85, 0x3C6EF372, 0xA54FF53A, 0x510E527F, 0x9B05688C, 0x1F83D9AB, 0x5BE0CD19);
  
-            let W = new Array(64);
-            let a, b, c, d, e, f, g, h, i, j;
-            let T1, T2;
+            var W = new Array(64);
+            var a, b, c, d, e, f, g, h, i, j;
+            var T1, T2;
       
             m[l >> 5] |= 0x80 << (24 - l % 32);
             m[((l + 64 >> 9) << 4) + 15] = l;
       
-            for ( let i = 0; i<m.length; i+=16 ) {
+            for ( var i = 0; i<m.length; i+=16 ) {
                 a = HASH[0];
                 b = HASH[1];
                 c = HASH[2];
@@ -76,7 +61,7 @@
                 g = HASH[6];
                 h = HASH[7];
       
-                for ( let j = 0; j<64; j++) {
+                for ( var j = 0; j<64; j++) {
                     if (j < 16) W[j] = m[j + i];
                     else W[j] = safe_add(safe_add(safe_add(Gamma1256(W[j - 2]), W[j - 7]), Gamma0256(W[j - 15])), W[j - 16]);
       
@@ -106,9 +91,9 @@
         }
       
         function str2binb (str) {
-            let bin = Array();
-            let mask = (1 << chrsz) - 1;
-            for(let i = 0; i < str.length * chrsz; i += chrsz) {
+            var bin = Array();
+            var mask = (1 << chrsz) - 1;
+            for(var i = 0; i < str.length * chrsz; i += chrsz) {
                 bin[i>>5] |= (str.charCodeAt(i / chrsz) & mask) << (24 - i%32);
             }
             return bin;
@@ -116,11 +101,11 @@
       
         function Utf8Encode(string) {
             string = string.replace(/\r\n/g,"\n");
-            let utftext = "";
+            var utftext = "";
       
-            for (let n = 0; n < string.length; n++) {
+            for (var n = 0; n < string.length; n++) {
       
-                let c = string.charCodeAt(n);
+                var c = string.charCodeAt(n);
       
                 if (c < 128) {
                     utftext += String.fromCharCode(c);
@@ -141,72 +126,27 @@
         }
       
         function binb2hex (binarray) {
-            let hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
-            let str = "";
-            for(let i = 0; i < binarray.length * 4; i++) {
+            var hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
+            var str = "";
+            for(var i = 0; i < binarray.length * 4; i++) {
                 str += hex_tab.charAt((binarray[i>>2] >> ((3 - i%4)*8+4)) & 0xF) +
                 hex_tab.charAt((binarray[i>>2] >> ((3 - i%4)*8  )) & 0xF);
             }
             return str;
         }
       
-        //s = Utf8Encode(s);
-        //return binb2hex(core_sha256(str2binb(s), s.length * chrsz));
-        
-        let result = binb2hex(core_sha256(str2binb(s), s.length * chrsz));
-		
-		let md5 = hex_md5($('#fname').val()); 
-		let sha1 = hex_sha1($('#fname').val()); 
-		let ripemd160 = hex_rmd160($('#fname').val()); 
-		
-		
-		
-		let sha256 = CryptoJS.SHA256($('#fname').val()).toString(); 
-		let sha512 = hex_sha512($('#fname').val()).toString();
-		
-		document.getElementById("pmessage").textContent = s;
-		document.getElementById("emessageMD5").textContent = md5;
-		document.getElementById("emessageSHA1").textContent = sha1;
-		document.getElementById("emessageripemd160").textContent = ripemd160;
-        document.getElementById("emessageA256").textContent = result;
-		document.getElementById("emessageB256").textContent = sha256;
-		document.getElementById("emessage512").textContent = sha512;
-
-
-        
+        s = Utf8Encode(s);
+        return binb2hex(core_sha256(str2binb(s), s.length * chrsz));
       
     }
+     
+     
+     
+     
+ 
  
     // 암호화 확인
-    //console.log(SHA256("Test")) ;
+    console.log(SHA256("Test")) ;
  
 </script>
-
-</head>
-
-
-<body>
- <H1> HTML DES </H>
-  <div class="container">
-  <button id="button1" onclick="SHA256();">실행</button>
-  </div>
-    
-   <input type="text" id="fname">
-    
- <h5>원본메시지  <div id="pmessage"></div> </h5>
- <h5>암호메시지(MD5)  <div id="emessageMD5"></div> </h5>
- <h5>암호메시지(SHA1)  <div id="emessageSHA1"></div> </h5>
- <h5>암호메시지(ripemd160)  <div id="emessageripemd160"></div> </h5>
- <h5>암호메시지(SHA256-ORG)  <div id="emessageA256"></div> </h5>
- <h5>암호메시지(SHA256)  <div id="emessageB256"></div> </h5>
- <h5>암호메시지(SHA512)  <div id="emessage512"></div> </h5>
- 
-</body>
-<footer class="py-5 bg-dark">
-  <div class="container">
-    <p class="m-0 text-center text-white"><b>Copyright &copy; Sunstar. Since 2015</b></p>
-  </div>
-</footer>
-</html>
-
 
